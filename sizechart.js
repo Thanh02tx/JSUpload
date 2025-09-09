@@ -1,17 +1,21 @@
-const getTag=()=>{
-    return 'SC-JOKx3pnBJWhLcx2L';
-}
-const getDomain=()=>{
-    return 'delfi-choco.onshopbase.com';
-}
+const urlApi = 'https://localhost:3443/public/sizechart/find-tag-and-type';
+
 (function () {
-    //const ROOT_SEL   = '.variants-selector';
-    const ROOT_SEL = 'section.block-container[block-id="qh5lC2"]';
+    const raw = document.querySelector('#__INITIAL_STATE__')?.textContent;
+    if (!raw) {
+        console.error("❌ Không tìm thấy __INITIAL_STATE__");
+        return;
+    }
+    const data = JSON.parse(raw);
+    const productType = data?.product?.product?.product_type || '';
+    const tags = data?.product?.product?.tags || '';
+    const title = data?.product?.product?.title || '';
     const IFRAME_BASE = 'http://localhost:3000/public/sizecharts';
     const IFRAME_SRC = `${IFRAME_BASE}?${new URLSearchParams({
-    tag: getTag(),
-    domain: getDomain(), 
+        tag: tags,
+        productType
     }).toString()}`;
+    const ROOT_SEL = 'section.block-container[block-id="qh5lC2"]';
     function resizeIframeBox(box) {
         const winWidth = window.innerWidth;
         let percent = 0.95;
@@ -117,5 +121,4 @@ const getDomain=()=>{
     // nếu là SPA: DOM thay đổi thì tự chèn lại (idempotent)
     const mo = new MutationObserver(injectAboveRoot);
     mo.observe(document.body, { childList: true, subtree: true });
-
 })();
