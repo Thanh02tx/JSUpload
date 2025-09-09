@@ -45,7 +45,7 @@ const getDomain=()=>{
         closeBtn.style.cssText = `
         position:absolute;  right:12px; z-index:1; font-size:24px; font-weight:800;
         width:3rem; height:3rem; display:flex; align-items:center; justify-content:center;
-        background:#ddd;  border:0; border-radius:12px;
+        border:0; border-radius:12px;
         cursor:pointer; transition:transform .2s, filter .2s;
         `;
         closeBtn.addEventListener('mouseenter', () => { closeBtn.style.filter = 'brightness(1.06)'; closeBtn.style.transform = 'translateY(-1px)'; });
@@ -117,4 +117,5 @@ const getDomain=()=>{
     // nếu là SPA: DOM thay đổi thì tự chèn lại (idempotent)
     const mo = new MutationObserver(injectAboveRoot);
     mo.observe(document.body, { childList: true, subtree: true });
+
 })();
